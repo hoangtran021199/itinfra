@@ -5,3 +5,23 @@ Resources:
     Properties:
       ImageId: "ami-00b91dfe48217a32f"
       InstanceType: "t2.micro"
+MySecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties: 
+      GroupName: "hoangSecurityGRP"
+      GroupDescription: "Beschreibung der Security Group"
+      VpcId: !Ref MyVPC  # Verweis auf die VPC, in der die Security Group erstellt wird
+      SecurityGroupIngress:  # Eingehender Verkehr (Ingress-Regeln)
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0   # Öffnet Port 22 (SSH) für die ganze Welt
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0   # Öffnet Port 80 (HTTP) für die ganze Welt
+      SecurityGroupEgress:  # Ausgehender Verkehr (Egress-Regeln)
+        - IpProtocol: -1
+          FromPort: -1
+          ToPort: -1
+          CidrIp: 0.0.0.0/0   # Erlaubt alle ausgehenden Verbindungen
